@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PYBUILD_DISABLE=1
+
+%:
+	dh $@ --with python3
+
+override_dh_auto_build:
+	# Build step - nothing to compile for Python
+
+override_dh_auto_install:
+	# Create directory structure
+	mkdir -p debian/xtop/opt/xtop
+	mkdir -p debian/xtop/usr/bin
+
+	# Copy application files
+	cp -r core debian/xtop/opt/xtop/
+	cp -r tui debian/xtop/opt/xtop/
+	cp -r sql debian/xtop/opt/xtop/
+	cp xtop debian/xtop/opt/xtop/
+	cp README.md debian/xtop/opt/xtop/
+	[ -f LICENSE ] && cp LICENSE debian/xtop/opt/xtop/ || true
+
+	# Create virtual environment (after dh_prep has cleaned)
+	python3 -m venv debian/xtop/opt/xtop/venv
+
+	# Install dependencies in venv
+	debian/xtop/opt/xtop/venv/bin/pip install --upgrade pip
+	debian/xtop/opt/xtop/venv/bin/pip install textual duckdb
+
+	# Make main script executable
+	chmod +x debian/xtop/opt/xtop/xtop
+
+	# Create wrapper script
+	echo '#!/bin/bash' > debian/xtop/usr/bin/xtop
+	echo 'exec /opt/xtop/venv/bin/python3 /opt/xtop/xtop "$$@"' >> debian/xtop/usr/bin/xtop
+	chmod +x debian/xtop/usr/bin/xtop
+
+override_dh_install:
+	# Skip dh_install - we handle everything in override_dh_auto_install
+
+override_dh_auto_clean:
+	rm -rf debian/xtop
+	dh_auto_clean

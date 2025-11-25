@@ -1,0 +1,7 @@
+xtop (1.0.0-1) unstable; urgency=medium
+
+  * Initial Debian package for xtop
+  * Isolated venv installation using system python
+  * Includes textual and duckdb dependencies
+
+ -- Tanel Poder <tanel@tanelpoder.com>  Mon, 25 Nov 2024 00:00:00 +0000

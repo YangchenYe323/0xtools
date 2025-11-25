@@ -1,0 +1,26 @@
+Source: xtop
+Section: utils
+Priority: optional
+Maintainer: Package Maintainer <maintainer@example.com>
+Build-Depends: debhelper-compat (= 13),
+               python3,
+               python3-pip,
+               python3-venv,
+               dh-python
+Standards-Version: 4.6.0
+Homepage: https://github.com/0xtools/xtop
+
+Package: xtop
+Architecture: all
+Depends: ${misc:Depends}, python3
+Description: Terminal UI for xcapture thread activity analysis
+ XTOP is an advanced terminal-based visualization and analysis tool for Linux
+ system performance data collected by xcapture. It provides interactive
+ exploration of system metrics through a powerful TUI (Terminal User Interface)
+ built with Python and the Textual framework.
+ .
+ Key features:
+  * Interactive TUI with dynamic query system
+  * Latency histograms and time-series heatmaps
+  * Stack trace viewing with symbol resolution
+  * System call and I/O request latency analysis

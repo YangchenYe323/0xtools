@@ -1,0 +1,5 @@
+core opt/xtop/
+tui opt/xtop/
+sql opt/xtop/
+xtop opt/xtop/
+README.md opt/xtop/
